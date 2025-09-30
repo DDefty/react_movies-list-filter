@@ -3,6 +3,14 @@ import './App.scss';
 import { MoviesList } from './components/MoviesList';
 import moviesFromServer from './api/movies.json';
 
+interface Movie {
+  title: string;
+  description?: string;
+  imgUrl: string;
+  imdbUrl: string;
+  imdbId: string;
+}
+
 export const App: React.FC = () => {
   const [query, setQuery] = useState('');
 
@@ -11,7 +19,7 @@ export const App: React.FC = () => {
   };
 
   const normalizedQuery = query.trim().toLowerCase();
-  const visibleMovies = moviesFromServer.filter(
+  const visibleMovies: Movie[] = moviesFromServer.filter(
     movie =>
       movie.title.toLowerCase().includes(normalizedQuery) ||
       (movie.description || '').toLowerCase().includes(normalizedQuery),
@@ -22,7 +30,6 @@ export const App: React.FC = () => {
       <div className="page-content">
         <div className="box">
           <div className="field">
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="search-query" className="label">
               Search movie
             </label>
